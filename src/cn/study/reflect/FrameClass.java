@@ -1,8 +1,9 @@
 package cn.study.reflect;
 
-import java.io.IOException;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -19,6 +20,8 @@ import java.util.Properties;
  *          3.使用反射技术来加载类文件进内存
  *          4.创建对象
  *          5.执行方法
+ *
+ *  可以使用静态代码块，对文件读取
  */
 public class FrameClass {
     public static void main(String[] args) throws Exception {
@@ -28,8 +31,13 @@ public class FrameClass {
         //1.2加载加载配置文件，转化为一个集合,Properties为map的子类
         //1.2.1获取class目录下的配置文件
         ClassLoader classLoader = FrameClass.class.getClassLoader();//获取字节码文件的类加载器
-        InputStream is = classLoader.getResourceAsStream("frame.properties");//获取资源对应的字节流
-        pro.load(is);
+
+        // 两种方式...
+        // InputStream is = classLoader.getResourceAsStream("frame.properties");//获取资源对应的字节流
+        // pro.load(is);
+        URL url = classLoader.getResource("frame.properties");
+        String path = url.getPath();
+        pro.load(new FileReader(path));
 
         //2.获取配置文件中定义的数据
         String className = pro.getProperty("className");
