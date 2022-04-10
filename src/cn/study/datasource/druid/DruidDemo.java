@@ -1,10 +1,8 @@
 package cn.study.datasource.druid;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.alibaba.druid.pool.DruidPooledConnection;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Properties;
@@ -22,5 +20,6 @@ public class DruidDemo {
         DataSource ds = DruidDataSourceFactory.createDataSource(pro);
         Connection conn = ds.getConnection();
         System.out.println(conn);
+
     }
 }

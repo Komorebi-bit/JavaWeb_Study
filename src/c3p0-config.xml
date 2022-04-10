@@ -3,7 +3,7 @@
     <default-config>
         <!--  连接参数  -->
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/phone</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/phone?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;zeroDateTimeBehavior=convertToNull&amp;allowMultiQueries=true</property>
         <property name="user">root</property>
         <property name="password">10086</property>
         <!--  连接池参数  -->
@@ -12,13 +12,6 @@
         <property name="checkoutTimeout">3000</property>
     </default-config>
 
-<!--    <name-config name="">-->
-<!--        useUnicode=true
-            &characterEncoding=utf-8
-            &useSSL=true
-            &zeroDateTimeBehavior=convertToNull
-            &allowMultiQueries=true
--->
  <named-config name="otherc3p0">
     <!--  连接参数 -->
     <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
@@ -30,6 +23,6 @@
     <property name="initialPoolSize">5</property>
     <property name="maxPoolSize">8</property>
     <property name="checkoutTimeout">1000</property>
+     <!--  太短了，很容易超时  -->
 </named-config>
-
 </c3p0-config>
