@@ -1,5 +1,7 @@
 package com.db;
 
+import com.utils.DBOper;
+
 import java.sql.*;
 
 /**
@@ -8,37 +10,68 @@ import java.sql.*;
  */
 
 public class Dao {
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/haier?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
+    String user = "root";
+    String pwd = "10086";
     Connection conn = null;
-    PreparedStatement pst = null;
+    PreparedStatement pstt = null;
     ResultSet rs = null;
 
-    // 连接数据库
-    public Connection getConn(String server, String dbname, String user, String pw)
-            throws ClassNotFoundException, SQLException {
-        String Driver = "com.mysql.cj.jdbc.Driver";
-        String url =
-                "jdbc:mysql://"
-                        + server
-                        + ":3306/"
-                        + dbname
-                        + "?useUnicode=true&characterEncodind=utf-8&useSSL=true";
-
-        //String url = "jdbc:mysql://localhost:3306/haier?useUnicode=true&characterEncodind=utf-8&useSSL=true";
-
-        Class.forName(Driver);
-        conn = DriverManager.getConnection(url, user, pw);
+    //连接数据库
+    public Connection getConn() {
+        try{
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, pwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("数据库连接失败");
+        }
         return conn;
     }
 
-    // 释放资源
+    //查询
+    public ResultSet executeQuery(String sql,String user,String pwd){
+        try {
+            conn=getConn();
+            pstt = conn.prepareStatement(sql);
+            pstt.setString(1,user);
+            pstt.setString(2,pwd);
+            rs = pstt.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //更新
+    public int executeUpdate(String sql, Object[] params){
+        try{
+            conn=getConn();
+            pstt = conn.prepareStatement(sql);
+            for(int i=0;i<params.length;i++){
+                pstt.setObject(i+1,params[i]);
+            }
+            int count = pstt.executeUpdate();
+            return count;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally{
+            closeAll();
+        }
+        return 0;
+    }
+
+    //释放资源
     public void closeAll() {
         try {
-            if (rs != null) rs.close();
+            if (rs != null) {rs.close();}
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (pst != null) pst.close();
+                if (pstt != null) pstt.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
@@ -49,21 +82,5 @@ public class Dao {
                 }
             }
         }
-    }
-
-    //验证用户登录信息
-    public boolean executeQuery(String sql,String user,String pw){
-        try {
-            pst = conn.prepareStatement(sql);
-            pst.setString(1,user);
-            pst.setString(2,pw);
-            rs = pst.executeQuery();
-            if(rs!=null && rs.next()){
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

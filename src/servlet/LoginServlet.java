@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "com.servlet.admin.servlet.LoginServlet", value = "/com.servlet.admin.servlet.LoginServlet")
+@WebServlet(name = "com.servlet.LoginServlet", value = "/com.servlet.LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     public LoginServlet(){super();}

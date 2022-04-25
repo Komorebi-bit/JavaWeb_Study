@@ -1,21 +1,19 @@
 package com.servlet.admin;
 
-import com.db.*;
-
+import com.db.Dao;
+import com.utils.DBOper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "com.servlet.admin.servlet.LoginServlet", value = "/com.servlet.admin.servlet.LoginServlet")
+@WebServlet(name = "com.servlet.admin.LoginServlet", value = "/com.servlet.admin.LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     public LoginServlet(){super();}
@@ -32,36 +30,22 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String user = request.getParameter("loginName");
-        String pw = request.getParameter("password");
+        String pwd = request.getParameter("password");
 
-        String server = "localhost";
-        String dbname = "haier";
-        String dbuser = "root";
-        String dbpw = "10086";
-
-
-        Dao dao = new Dao();
+        Dao conn = new Dao();
         try {
-            dao.getConn(server,dbname,dbuser,dbpw);
-
-            System.out.println("数据库连接成功");
-
+            boolean result = false;
             String sql = "select * from userdetail where username=? and userpass=?";
-
-            boolean bool = dao.executeQuery(sql,user,pw);
-
-            if(bool){
-                out.println("登录成功");
+            ResultSet rs = conn.executeQuery(sql, user, pwd);
+            if(rs.next()){
+                out.println("登陆成功");
             }else{
                 out.println("登录失败");
             }
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
-            dao.closeAll();
+        } finally{
+            conn.closeAll();
         }
     }
 }
