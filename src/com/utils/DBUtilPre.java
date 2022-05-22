@@ -1,15 +1,15 @@
-package com.utils;
+package utils;
 
 import java.sql.*;
 import java.util.*;
 
 /**
  * @author Komorebi
- * @date 2022.04.19.19:32
+ * @date 2022.04.18.19:31
  */
-public class DBOper {
+public class DBUtilPre {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URLSTR = "jdbc:mysql://localhost:3306/haier?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
+    private static final String URLSTR = "jdbc:mysql://localhost:3306/librarydb?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
     private static final String USERNAME = "root";
     private static final String USERPASSWORD = "10086";
     private Connection connection = null;
@@ -61,6 +61,7 @@ public class DBOper {
             for (int i = 0; i < params.length; i++) {
                 preparedStatement.setObject(i + 1, params[i]);
             }
+
             affectedLine = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -85,6 +86,7 @@ public class DBOper {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return resultSet;
     }
 
@@ -120,6 +122,23 @@ public class DBOper {
         return list;
     }
 
+    //查询总记录数
+    public int executeQuery(String sql) {
+        try{
+            connection = this.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery(sql);
+            while(resultSet.next()){
+               return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return 0;
+    }
+
     public void closeAll() {
 
         if (resultSet != null) {
@@ -146,4 +165,5 @@ public class DBOper {
             }
         }
     }
+
 }
