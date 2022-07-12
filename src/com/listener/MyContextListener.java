@@ -1,4 +1,4 @@
-package listener;
+package com.listener;
 
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import jakarta.servlet.ServletContextEvent;
@@ -10,8 +10,6 @@ import java.sql.SQLException;
 /**
  * @author Komorebi
  * @since 2022.04.06.9:39
- *
- * 需要在web.xml配置！！！
  */
 
 public class MyContextListener implements ServletContextListener {

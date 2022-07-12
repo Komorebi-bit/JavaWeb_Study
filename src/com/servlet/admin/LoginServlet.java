@@ -1,7 +1,7 @@
 package com.servlet.admin;
 
 import com.db.Dao;
-import com.utils.DBOper;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,6 +31,12 @@ public class LoginServlet extends HttpServlet {
 
         String user = request.getParameter("loginName");
         String pwd = request.getParameter("password");
+
+        /*ServletContext context = this.getServletContext();
+        String server = context.getInitParameter("server");
+        String dbname = context.getInitParameter("dbname");
+        String user = context.getInitParameter("user");
+        String pwd = context.getInitParameter("pwd");*/
 
         Dao conn = new Dao();
         try {

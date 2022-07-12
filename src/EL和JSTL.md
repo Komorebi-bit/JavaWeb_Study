@@ -65,3 +65,46 @@
      - scope指定保存变量的范围
    - <c:redirect >
    - <c:url >
+
+## L18N标签库
+
+- <fmt: setLocale value="setting" variant="variant" scope=""/>
+
+  - 用于重写客户端指定的区域设置
+
+  - value 指定语言和国家代码，例如zh_CN
+  - variant 指定浏览器变量
+
+- <fmt: bundle basename="basename">.....</fmt:bundle >
+
+  - 加载本地化资源包
+  - basename 指定资源包的名称 该名称不包括.properties后缀名
+
+- <fmt: setBundle basename="basename" var="name" scope="">.....</fmt:setBundle >
+
+  - 加载一个资源包，并将它储存在变量中
+  - var 指定变量名称
+  - scope 指定变量的范围
+
+- <fmt: message key="messageKey"/>
+
+  - 输出资源包中键映射的值
+
+- <fmt: formatNumber value="value" var="name" pattern="patterrn" scope="" type="number|currency|percent" groupingUsed="true|false"/>
+
+  - 格式化数字
+  - value 指定需要格式化的数字
+  - var 指定变量名称
+  - pattern 指定格式化样式
+  - scope 指定变量范围
+  - type 指定值的类型 可以是number数字，currency货币，percent百分比
+  - groupingUsed 指明是否将数字进行间隔，例如123，000.00
+
+- <fmt: formatDate value="value" var="name" patttern="pattern" scope="" type="time|date|both"/>
+
+  - 格式化日期
+  - value 指定需要格式化的时间和日期，该值必须指定
+  - var 指定变量名称
+  - scope 指定变量范围
+  - type 指定类型time时间，date日期，both时间和日期
+  - pattern 指定格式化日期时间的样式，例如yyyy-MM-dd hh:mm:ss 

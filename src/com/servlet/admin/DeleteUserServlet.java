@@ -1,7 +1,6 @@
 package com.servlet.admin;
 
 import com.db.Dao;
-import com.utils.DBOper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
